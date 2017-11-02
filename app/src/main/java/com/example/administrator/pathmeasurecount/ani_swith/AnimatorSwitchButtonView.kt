@@ -10,6 +10,12 @@ import android.view.animation.AccelerateInterpolator
 
 /**
  * 自定义旋转样式的选择按钮
+ * 主要是使用到了
+ *
+ * 1. pathMeasure来做路径的动画效果。
+ * 2. 使用了 Bazier曲线来做路径的效果
+ * 3. 使用drawClip Api
+ *
  * Created by Administrator on 2017/11/1 0001.
  */
 class AnimatorSwitchButtonView : View {
