@@ -6,6 +6,7 @@ import android.graphics.*
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AccelerateInterpolator
 
 /**
  * 自定义旋转样式的选择按钮
@@ -135,31 +136,41 @@ class AnimatorButtonView : View {
         centerX = measuredWidth / 2f - mRadius
         centerY = measuredHeight / 2f
 
+        val scale = 0.5
+        val scale2 = scale + 0.1
+        val angleDegree = 45.0
+        val toRadians = Math.toRadians(angleDegree)
+        val cos = Math.cos(toRadians)
+        val sin = Math.sin(toRadians)
+        val offsetX = mRadius * scale * cos
+        val offsetY = mRadius * scale * sin
+
         //state2
         p0_State2.x = centerX - mRadius / 5 * 3
         p0_State2.y = centerY
 
-        p1_State2.x = centerX
-        p1_State2.y = centerY + mRadius / 2f
+        p1_State2.x = (centerX-offsetX/2f).toFloat()
+        p1_State2.y = (centerY + mRadius * scale2 * sin).toFloat()
 
-        p2_State2.x = centerX
-        p2_State2.y = centerY + mRadius / 2f
+        p2_State2.x = (centerX-offsetX/2f).toFloat()
+        p2_State2.y = (centerY + mRadius * scale2 * sin).toFloat()
 
-        p3_State2.x = centerX + mRadius / 2
-        p3_State2.y = centerY - mRadius / 2
+        p3_State2.x = (centerX + mRadius * scale2 * cos).toFloat()
+        p3_State2.y = (centerY - mRadius * scale2 * cos).toFloat()
 
-        //state2
-        p1_State1.x = centerX - mRadius / 2
-        p1_State1.y = centerY - mRadius / 2
+        //state1
+        p0_State1.x = (centerX + offsetX).toFloat()
 
-        p0_State1.x = centerX + mRadius / 2
-        p0_State1.y = centerY + mRadius / 2
+        p0_State1.y = (centerY + offsetY).toFloat()
 
-        p2_State1.x = centerX + mRadius / 2
-        p2_State1.y = centerY - mRadius / 2
+        p1_State1.x = (centerX - offsetX).toFloat()
+        p1_State1.y = (centerY - offsetY).toFloat()
 
-        p3_State1.x = centerX - mRadius / 2
-        p3_State1.y = centerY + mRadius / 2
+        p2_State1.x = (centerX + offsetX).toFloat()
+        p2_State1.y = (centerY - offsetX).toFloat()
+
+        p3_State1.x = (centerX - offsetX).toFloat()
+        p3_State1.y = (centerY + offsetX).toFloat()
 
         ctrl0.x = centerX + mRadius / 2
         ctrl0.y = centerY - mRadius / 2
@@ -230,6 +241,11 @@ class AnimatorButtonView : View {
         canvas.drawLine(p0_move.x, p0_move.y, p1_move.x, p1_move.y, mPaintLine)
         canvas.drawLine(p2_move.x, p2_move.y, p3_move.x, p3_move.y, mPaintLine)
         canvas.restore()
+
+//        drawHelpPointsAndLines(canvas, p0_State2)
+//        drawHelpPointsAndLines(canvas, p1_State2)
+//        drawHelpPointsAndLines(canvas, p2_State2)
+//        drawHelpPointsAndLines(canvas, p3_State2)
     }
 
     private fun drawMovePoints(canvas: Canvas, p: DrawPoint) {
@@ -282,7 +298,8 @@ class AnimatorButtonView : View {
             }
         }
 //        Toast.makeText(context, "Open =$open", Toast.LENGTH_SHORT).show()
-//        valueAnimator!!.interpolator= AccelerateDecelerateInterpolator()
+        valueAnimator!!.interpolator= AccelerateInterpolator()
+//        valueAnimator!!.interpolator= BounceInterpolator()
         valueAnimator!!.setDuration(400)
         valueAnimator!!.start()
     }
