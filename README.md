@@ -2,3 +2,4 @@
 
 1. switchButton
 com.example.administrator.pathmeasurecount.ani_swith.AnimatorSwitchButtonView
+![](https://github.com/deepsadness11/ViewZone/blob/master/art/switchButton.gif)
