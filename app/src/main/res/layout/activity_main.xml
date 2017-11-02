@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.administrator.pathmeasurecount.MainActivity">
 
-    <com.example.administrator.pathmeasurecount.ani_swith.AnimatorSwitchButtonView
+    <com.example.administrator.pathmeasurecount.example.SunView
         android:id="@+id/path"
         android:layout_width="400dp"
         android:layout_height="400dp"
