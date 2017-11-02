@@ -1,4 +1,4 @@
-package com.example.administrator.pathmeasurecount;
+package com.example.administrator.pathmeasurecount.example;
 
 /**
  * Created by Administrator on 2017/11/1 0001.
@@ -20,11 +20,11 @@ import android.view.View;
  */
 public class PathTan extends View implements View.OnClickListener {
 
+    float currentValue = 0;
     private Path mPath;
     private float[] pos;
     private float[] tan;
     private Paint mPaint;
-    float currentValue = 0;
     private PathMeasure mMeasure;
 
     public PathTan(Context context) {

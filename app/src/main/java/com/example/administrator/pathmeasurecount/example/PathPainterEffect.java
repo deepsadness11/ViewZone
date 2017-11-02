@@ -1,4 +1,4 @@
-package com.example.administrator.pathmeasurecount;
+package com.example.administrator.pathmeasurecount.example;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

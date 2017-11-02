@@ -1,4 +1,4 @@
-package com.example.administrator.pathmeasurecount
+package com.example.administrator.pathmeasurecount.example
 
 import android.content.Context
 import android.util.AttributeSet
