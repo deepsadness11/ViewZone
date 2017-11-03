@@ -11,7 +11,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 //
         path.setOnClickListener {
-            path.startAnimator0()
+            path.changeCommentLikeState()
+        }
+        button.setOnClickListener {
+            path.setNumberWithAnimator(100999)
+        }
+        button2.setOnClickListener {
+            path.setNumberWithAnimator(1099)
         }
     }
 }

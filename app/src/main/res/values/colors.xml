@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="start_color">#F3e5d3</color>
     <color name="end_color">#7e86fa</color>
+    <color name="comment_red_color">#e4583e</color>
+    <color name="comment_red_color_gray">#da8d7f</color>
+    <color name="comment_gray_color">#cccccc</color>
 </resources>
