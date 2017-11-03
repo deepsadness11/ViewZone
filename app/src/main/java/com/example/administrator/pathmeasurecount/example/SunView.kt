@@ -101,18 +101,31 @@ class SunView : View {
 
         rectSunShine.set((cX - mRadius) * recScale, (cY - mRadius) * recScale, (cX + mRadius) * recScale, (cY + mRadius) * recScale)
 
+        var lg = LinearGradient(rectSunShine.left, rectSunShine.top, rectSunShine.right, rectSunShine.bottom,
+                intArrayOf(Color.parseColor("#ffe38e"), Color.parseColor("#b28200")),
+                floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+        lg.getLocalMatrix(matrix1)
+        mPaintSunShine.setShader(lg)
 
         val lg2 = LinearGradient(cX, cY - mRadius, cX, cY + mRadius,
                 intArrayOf(Color.parseColor("#f7b600"), Color.parseColor("#ae8200")),
                 floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+        lg2.setLocalMatrix(matrix2)
         mPaintSunShine2.setShader(lg2)
+
 
         mOvalRect.set(cX - mRadius - 20f, cY + mRadius / 2 * 5, cX + mRadius + 20f, cY + mRadius / 2 * 5 + 10)
         cloudRectClip = RectF(cX - mRadius / 4, cY - mRadius / 5 - mRadius / 4, cX + mRadius / 3 * 4, cX - mRadius / 8 * 5)
 
+
+        var matrix = Matrix()
         val lg3 = LinearGradient(cloudRectClip.left, cloudRectClip.top, cloudRectClip.right / 2 + cloudRectClip.centerX() / 2, cloudRectClip.bottom,
                 intArrayOf(Color.parseColor("#fcfbf3"), Color.parseColor("#dfdbcb")),
                 floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+        var localMatrix = lg3.getLocalMatrix(matrix)
+        println(matrix.toString() + "localMatrix=${localMatrix}")
+
+
         mPaintCloud.setShader(lg3)
         mPaintCloud.setMaskFilter(BlurMaskFilter(10f, BlurMaskFilter.Blur.OUTER))
 
@@ -145,6 +158,9 @@ class SunView : View {
 
     private var windDistance: Float = 0f
 
+    val matrix1 = Matrix()
+    val matrix2 = Matrix()
+
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -155,10 +171,8 @@ class SunView : View {
         canvas.scale(recScale, recScale, cX, cY)
         canvas.rotate(0f + sunRotateAngel, cX, cY)
 
-        lg = LinearGradient(rectSunShine.left, rectSunShine.top, rectSunShine.right, rectSunShine.bottom,
-                intArrayOf(Color.parseColor("#ffe38e"), Color.parseColor("#b28200")),
-                floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
-        mPaintSunShine.setShader(lg)
+        matrix1.setRotate(0f - sunRotateAngel, cX, cY)
+        mPaintSunShine.shader.setLocalMatrix(matrix1)
 
         canvas.drawRect(rectSunShine, mPaintSunShine)
         canvas.restore()
@@ -167,6 +181,8 @@ class SunView : View {
         canvas.translate(0f, windDistance)
         canvas.scale(recScale, recScale, cX, cY)
         canvas.rotate(-45f + sunRotateAngel, cX, cY)
+        matrix2.setRotate(-sunRotateAngel, cX, cY)
+        mPaintSunShine2.shader.setLocalMatrix(matrix2)
         canvas.drawRect(rectSunShine, mPaintSunShine2)
         canvas.restore()
 
