@@ -132,6 +132,7 @@ class JCommentView : View {
 //                textPaint.color = Color.RED
                 save()
                 val noChangeNumberPart = getNoChangeNumberPart()
+//                println("noChangeNumberPart=$noChangeNumberPart")
                 drawText(noChangeNumberPart, textStartX, textStartY, textPaint)
                 restore()
 
@@ -142,7 +143,13 @@ class JCommentView : View {
                 textPaint.alpha = (255 * alpha).toInt()
                 val changeNumberPartTranlateX = getDownToMidPartTranlateX()
                 translate(changeNumberPartTranlateX, (totalDistance - transLateY).toFloat())
-                val downToMidPart = getDownToMidPart()
+                var downToMidPart = ""
+                if (upOrDown) {
+                    downToMidPart = getDownToMidPart()
+                } else {
+                    downToMidPart = getChangeNumberNewPart()
+//                    println("downToMidPart=$downToMidPart")
+                }
                 drawText(downToMidPart, textStartX, textStartY, textPaint)
                 restore()
 
@@ -153,6 +160,7 @@ class JCommentView : View {
                 textPaint.alpha = (255 * (1 - alpha)).toInt()
                 translate(getMidToUpPartTranslationX(), (0 - transLateY).toFloat())
                 val changeNumberOldPart = getChangeNumberOldPart()
+//                println("changeNumberOldPart=$changeNumberOldPart")
                 drawText(changeNumberOldPart, textStartX, textStartY, textPaint)
                 restore()
             }
@@ -327,14 +335,14 @@ class JCommentView : View {
     private fun getMidToUpScrollPart(): String {
         val v = currentNumber / Math.pow(10.0, animateDistance.toDouble()).toInt()
         val f = currentNumber % Math.pow(10.0, animateDistance.toDouble()).toInt()
-        println("getMidToUpScrollPart v=$v")
-        println("getMidToUpScrollPart f=$f")
+//        println("getMidToUpScrollPart v=$v")
+//        println("getMidToUpScrollPart f=$f")
         if (v == 1 && f != 0) {
             var numberLength = getNumberLength(currentNumber)
             val lastIndex = numberLength - animateDistance + 1
             if (lastIndex < numberLength) {
                 val substring = currentNumber.toString().substring(0, lastIndex)
-                println("target v==1 substring=$substring")
+//                println("target v==1 substring=$substring")
                 return substring
             } else {
                 return "" + v
@@ -404,6 +412,9 @@ class JCommentView : View {
     fun setNumberWithAnimator(number: Int) {
         val oldNumber = currentNumber
         val diff = Math.abs(number - oldNumber)
+        if (diff == 0) {
+            return
+        }
         val interval = animatorDuration / diff
         for (i in oldNumber until number) {
             val offset = i - oldNumber
