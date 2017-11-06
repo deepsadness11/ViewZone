@@ -131,7 +131,8 @@ class JCommentView : View {
             } else {
 //                textPaint.color = Color.RED
                 save()
-                drawText(getNoChangeNumberPart(), textStartX, textStartY, textPaint)
+                val noChangeNumberPart = getNoChangeNumberPart()
+                drawText(noChangeNumberPart, textStartX, textStartY, textPaint)
                 restore()
 
                 save()
@@ -151,7 +152,8 @@ class JCommentView : View {
                 textPaint.alpha = 255
                 textPaint.alpha = (255 * (1 - alpha)).toInt()
                 translate(getMidToUpPartTranslationX(), (0 - transLateY).toFloat())
-                drawText(getChangeNumberOldPart() + "", textStartX, textStartY, textPaint)
+                val changeNumberOldPart = getChangeNumberOldPart()
+                drawText(changeNumberOldPart, textStartX, textStartY, textPaint)
                 restore()
             }
         }
@@ -349,6 +351,7 @@ class JCommentView : View {
     internal var totalDistance = 100
 
     fun subNumbers() {
+        staticNumber = false
         currentNumber--
         totalDistance = textPaint.getFontSpacing().toInt()
         val valueAnimator = ValueAnimator.ofInt(totalDistance, 0)

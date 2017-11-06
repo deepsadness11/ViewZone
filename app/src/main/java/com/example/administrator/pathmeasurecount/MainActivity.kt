@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
             path.setNumberWithAnimator(100999)
         }
         button2.setOnClickListener {
-            path.setNumberWithAnimator(1099)
+            path.subNumbers()
         }
     }
 }
